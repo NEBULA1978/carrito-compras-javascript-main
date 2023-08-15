@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>{{ mensaje }}</h2>
+        <header>
+            <h1>Tienda</h1>
+            <div class="container-icon">
+                <div class="container-cart-icon">
+                    <!-- Your cart icon content here -->
+                </div>
+                <div class="container-cart-products hidden-cart">
+                    <!-- Your cart products content here -->
+                </div>
+            </div>
+        </header>
+        <div class="container-items">
+            <div v-for="(item, index) in items" :key="index" class="item">
+                <figure>
+                    <img :src="item.image" :alt="item.name" />
+                </figure>
+                <div class="info-product">
+                    <h2>{{ item.name }}</h2>
+                    <p class="price">{{ item.price }}</p>
+                    <button @click="addToCart(item)" class="btn-add-cart">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            setup() {
+                const mensaje = Vue.ref('¡Bienvenido a la tienda!');
+                const items = Vue.reactive([
+                    {
+                        name: 'Zapatos Nike',
+                        price: '$80',
+                        image: 'https://via.placeholder.com/200x200?text=Zapatos+Nike'
+                    },
+                    {
+                        name: 'Audifonos',
+                        price: '$20',
+                        image: 'https://via.placeholder.com/200x200?text=Audifonos'
+                    },
+                    {
+                        name: 'Reloj',
+                        price: '$50',
+                        image: 'https://via.placeholder.com/200x200?text=Reloj'
+                    },
+                    // Add more items here
+                ]);
+                const cartItems = Vue.ref([]);
+
+                const addToCart = (item) => {
+                    cartItems.value.push(item);
+                };
+
+                return {
+                    mensaje,
+                    items,
+                    addToCart
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
